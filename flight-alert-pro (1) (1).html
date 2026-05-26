@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlightAlert Pro — Les meilleurs prix de vols avant tout le monde</title>
+<meta name="description" content="Recevez automatiquement les meilleures offres de billets d'avion en temps réel. Alertes instantanées, détection de baisses de prix, error fares.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#03060f;--bg2:#070d1a;--bg3:#0d1628;--bg4:#121e35;
+  --border:#1a2840;--border2:#1f3050;
+  --text:#ffffff;--text2:#8ba3c7;--text3:#4a6285;
+  --accent:#2563eb;--accent2:#3b82f6;--accent3:#60a5fa;
+  --gold:#f59e0b;--green:#10b981;--red:#ef4444;
+  --glass:rgba(255,255,255,0.03);--glass2:rgba(255,255,255,0.06);
+  --grad:linear-gradient(135deg,#1d4ed8,#2563eb,#7c3aed);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 0;transition:all .3s}
+nav.scrolled{background:rgba(3,6,15,0.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;text-decoration:none;color:var(--text)}
+.logo-icon{width:38px;height:38px;background:var(--grad);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s;cursor:pointer}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active-link{color:var(--accent3)}
+.btn-ghost{padding:8px 18px;border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:14px;font-weight:500;cursor:pointer;background:transparent;transition:all .2s;text-decoration:none;display:inline-block}
+.btn-ghost:hover{border-color:var(--accent2);color:var(--accent3)}
+.btn-nav{padding:9px 20px;background:var(--grad);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block}
+.btn-nav:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,99,235,0.4)}
+
+/* BURGER MOBILE */
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.burger span{display:block;width:22px;height:2px;background:var(--text2);border-radius:2px;transition:all .3s}
+.mobile-menu{display:none;position:fixed;top:66px;left:0;right:0;background:rgba(3,6,15,0.98);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);z-index:999;padding:20px 24px;flex-direction:column;gap:16px}
+.mobile-menu a{color:var(--text2);text-decoration:none;font-size:15px;font-weight:600;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.mobile-menu a:last-child{border:none}
+.mobile-menu.open{display:flex}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:110px 24px 80px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(37,99,235,0.18) 0%,transparent 70%);pointer-events:none}
+.hero-bg2{position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(0deg,var(--bg) 0%,transparent 100%);pointer-events:none}
+.grid-overlay{position:absolute;inset:0;background-image:linear-gradient(rgba(37,99,235,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,0.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:rgba(37,99,235,0.12);border:1px solid rgba(37,99,235,0.3);border-radius:100px;font-size:12px;font-weight:600;color:var(--accent3);margin-bottom:28px;letter-spacing:.5px}
+.live-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.6)}}
+h1{font-size:clamp(38px,6.5vw,82px);font-weight:900;line-height:1.05;letter-spacing:-2.5px;max-width:960px;margin:0 auto 24px}
+h1 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h1 .gold{background:linear-gradient(135deg,#f59e0b,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(15px,2.2vw,19px);color:var(--text2);max-width:620px;margin:0 auto 40px}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.btn-main{padding:16px 36px;background:var(--grad);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-block;box-shadow:0 0 30px rgba(37,99,235,0.3)}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(37,99,235,0.45)}
+.btn-outline{padding:16px 36px;border:1px solid var(--border2);color:var(--text);border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s;text-decoration:none;background:transparent;display:inline-block}
+.btn-outline:hover{border-color:var(--accent2);background:rgba(37,99,235,0.06)}
+
+/* SEARCH BAR */
+.search-bar{background:rgba(13,22,40,0.9);border:1px solid var(--border2);border-radius:20px;padding:20px 24px;max-width:780px;width:100%;margin-bottom:48px;backdrop-filter:blur(10px)}
+.search-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:12px;align-items:center}
+.search-field{display:flex;flex-direction:column;gap:4px;cursor:pointer;transition:opacity .2s}
+.search-field:hover{opacity:.8}
+.search-label{font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.8px}
+.search-val{font-size:15px;font-weight:600;color:var(--text)}
+.search-sub{font-size:11px;color:var(--text3)}
+.search-divider{width:1px;height:40px;background:var(--border2)}
+.btn-search{padding:14px 24px;background:var(--grad);border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .2s}
+.btn-search:hover{opacity:.9;transform:scale(1.03)}
+
+/* LIVE STATS */
+.live-stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.stat-pill{display:flex;align-items:center;gap:10px;padding:10px 20px;background:var(--glass);border:1px solid var(--border);border-radius:100px;font-size:13px}
+.stat-icon{font-size:16px}
+.stat-num{font-weight:800;color:var(--text)}
+.stat-lbl{color:var(--text3)}
+
+/* FLIGHT CARDS */
+.flights-live{max-width:760px;width:100%;margin:0 auto}
+.flight-card{background:rgba(13,22,40,0.85);border:1px solid var(--border2);border-radius:16px;padding:18px 22px;display:flex;align-items:center;gap:16px;margin-bottom:10px;transition:all .3s;cursor:pointer;backdrop-filter:blur(10px);text-decoration:none;color:inherit}
+.flight-card:hover{border-color:rgba(37,99,235,0.5);background:rgba(37,99,235,0.06);transform:translateX(4px)}
+.flight-card.new-deal{border-color:rgba(16,185,129,0.35);animation:borderPulse 2s ease-out}
+@keyframes borderPulse{0%,100%{border-color:rgba(16,185,129,0.35)}50%{border-color:rgba(16,185,129,0.8)}}
+.airline-logo{width:44px;height:44px;border-radius:10px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:1px solid var(--border2)}
+.flight-route{flex:1}
+.route-main{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.city{font-size:16px;font-weight:700}
+.route-arrow{color:var(--text3);font-size:14px}
+.route-detail{font-size:12px;color:var(--text3)}
+.flight-price{text-align:right;flex-shrink:0}
+.price-current{font-size:22px;font-weight:900}
+.price-current.cheap{color:var(--green)}
+.price-current.normal{color:var(--accent3)}
+.price-old{font-size:12px;color:var(--text3);text-decoration:line-through}
+.price-drop{font-size:11px;color:var(--green);font-weight:700;background:rgba(16,185,129,0.1);padding:2px 8px;border-radius:4px;display:inline-block;margin-top:2px}
+.deal-badge{font-size:10px;font-weight:800;padding:3px 10px;border-radius:4px;letter-spacing:.5px}
+.deal-badge.error{background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.3)}
+.deal-badge.great{background:rgba(16,185,129,0.12);color:var(--green);border:1px solid rgba(16,185,129,0.25)}
+.deal-badge.good{background:rgba(37,99,235,0.12);color:var(--accent3);border:1px solid rgba(37,99,235,0.25)}
+
+/* SECTION COMMONS */
+.container{max-width:1200px;margin:0 auto}
+.section-badge{display:inline-block;padding:5px 14px;background:rgba(37,99,235,0.1);border:1px solid rgba(37,99,235,0.25);border-radius:100px;font-size:11px;font-weight:700;color:var(--accent3);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px}
+.section-title{font-size:clamp(28px,4.5vw,50px);font-weight:800;letter-spacing:-1.5px;margin-bottom:14px;line-height:1.1}
+.section-sub{font-size:16px;color:var(--text2);max-width:540px;margin:0 auto}
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* SOURCES */
+.sources-section{padding:40px 24px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2)}
+.sources-label{text-align:center;font-size:11px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;font-weight:600;margin-bottom:20px}
+.sources-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center}
+.source-chip{padding:8px 18px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-size:13px;font-weight:600;color:var(--text2);transition:all .2s;cursor:pointer;text-decoration:none;display:inline-block}
+.source-chip:hover{border-color:var(--accent2);color:var(--accent3);background:rgba(37,99,235,0.06);transform:translateY(-2px)}
+
+/* STEPS */
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:56px}
+.step{background:var(--glass);border:1px solid var(--border);border-radius:20px;padding:32px;transition:all .3s;position:relative;overflow:hidden;cursor:default}
+.step::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--grad);opacity:0;transition:opacity .3s}
+.step:hover{border-color:rgba(37,99,235,0.3);transform:translateY(-4px);background:var(--glass2)}
+.step:hover::before{opacity:1}
+.step-num{font-size:42px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:16px}
+.step-icon{font-size:30px;margin-bottom:14px}
+.step-title{font-size:17px;font-weight:700;margin-bottom:8px}
+.step-text{font-size:13px;color:var(--text2);line-height:1.75}
+
+/* FEATURES */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px;margin-top:56px}
+.feat{background:var(--glass);border:1px solid var(--border);border-radius:18px;padding:26px;transition:all .3s;cursor:default}
+.feat:hover{background:var(--glass2);border-color:rgba(37,99,235,0.25);transform:translateY(-3px)}
+.feat-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+.feat-icon.blue{background:rgba(37,99,235,0.12);border:1px solid rgba(37,99,235,0.2)}
+.feat-icon.green{background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.2)}
+.feat-icon.gold{background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.2)}
+.feat-icon.purple{background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.2)}
+.feat-title{font-size:15px;font-weight:700;margin-bottom:8px}
+.feat-text{font-size:13px;color:var(--text2);line-height:1.7}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:56px;max-width:980px;margin-left:auto;margin-right:auto}
+.plan{background:var(--bg3);border:1px solid var(--border);border-radius:24px;padding:36px;position:relative;overflow:hidden;transition:all .3s;cursor:pointer}
+.plan:hover{transform:translateY(-6px);box-shadow:0 30px 60px rgba(0,0,0,.5);border-color:var(--border2)}
+.plan.featured{background:linear-gradient(135deg,rgba(37,99,235,0.1),rgba(124,58,237,0.07));border-color:rgba(37,99,235,0.45);transform:scale(1.03)}
+.plan.featured:hover{transform:scale(1.03) translateY(-6px)}
+.plan-badge{position:absolute;top:20px;right:20px;background:var(--grad);color:#fff;font-size:10px;font-weight:800;padding:4px 12px;border-radius:100px;letter-spacing:.5px}
+.plan-name{font-size:12px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.plan-price{font-size:48px;font-weight:900;letter-spacing:-2px;margin-bottom:4px}
+.plan-price sup{font-size:18px;font-weight:500;vertical-align:top;margin-top:12px;display:inline-block;color:var(--text2)}
+.plan-price sub{font-size:16px;font-weight:500;color:var(--text2);letter-spacing:0}
+.plan-desc{font-size:13px;color:var(--text3);margin-bottom:24px}
+.plan-divider{height:1px;background:var(--border);margin:20px 0}
+.plan-feats{list-style:none;margin-bottom:30px}
+.plan-feats li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text2);margin-bottom:11px;line-height:1.5}
+.plan-feats li::before{content:'✓';color:var(--green);font-weight:800;font-size:11px;width:18px;height:18px;background:rgba(16,185,129,0.1);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.btn-plan{width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:all .3s;border:none}
+.btn-plan.outline{background:transparent;border:1px solid var(--border2);color:var(--text)}
+.btn-plan.outline:hover{border-color:var(--accent2);color:var(--accent3);background:rgba(37,99,235,0.05)}
+.btn-plan.filled{background:var(--grad);color:#fff}
+.btn-plan.filled:hover{opacity:.9;box-shadow:0 12px 28px rgba(37,99,235,.4);transform:translateY(-1px)}
+.btn-plan.gold-btn{background:linear-gradient(135deg,#d97706,#f59e0b);color:#000;font-weight:800}
+.btn-plan.gold-btn:hover{opacity:.9;box-shadow:0 12px 28px rgba(245,158,11,.35)}
+
+/* TESTIMONIALS */
+.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:56px}
+.testimonial{background:var(--glass);border:1px solid var(--border);border-radius:18px;padding:26px;transition:all .3s}
+.testimonial:hover{background:var(--glass2);transform:translateY(-3px)}
+.t-stars{color:#f59e0b;font-size:13px;letter-spacing:2px;margin-bottom:12px}
+.t-text{font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:18px;font-style:italic}
+.t-author{display:flex;align-items:center;gap:10px}
+.t-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.t-name{font-size:13px;font-weight:700}
+.t-role{font-size:11px;color:var(--text3)}
+
+/* FAQ */
+.faq-list{max-width:700px;margin:56px auto 0}
+.faq-item{border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden;transition:border-color .2s}
+.faq-item:hover{border-color:var(--border2)}
+.faq-q{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:15px;font-weight:600;background:var(--glass);transition:background .2s;gap:16px;user-select:none}
+.faq-q:hover{background:var(--glass2)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
+.faq-item.open .faq-a{max-height:200px;padding:0 24px 20px}
+.faq-a p{font-size:13px;color:var(--text2);line-height:1.8}
+.faq-icon{font-size:18px;color:var(--accent3);transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+
+/* DASHBOARD PREVIEW */
+.dash-preview{background:var(--bg3);border:1px solid var(--border2);border-radius:24px;overflow:hidden;max-width:940px;margin:56px auto 0;box-shadow:0 40px 80px rgba(0,0,0,.6)}
+.dash-bar{background:var(--bg4);padding:14px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)}
+.d-dots{display:flex;gap:6px}
+.d-dots span{width:10px;height:10px;border-radius:50%;cursor:pointer}
+.d-dots span:nth-child(1){background:#ff5f57}
+.d-dots span:nth-child(2){background:#febc2e}
+.d-dots span:nth-child(3){background:#28c840}
+.d-url{flex:1;text-align:center;font-size:12px;color:var(--text3)}
+.dash-body{display:flex;min-height:420px}
+.d-sidebar{width:190px;background:var(--bg4);border-right:1px solid var(--border);padding:18px;flex-shrink:0}
+.d-logo{font-size:14px;font-weight:800;color:var(--accent3);margin-bottom:20px;display:flex;align-items:center;gap:6px}
+.d-nav{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;font-size:12px;color:var(--text2);margin-bottom:3px;cursor:pointer;transition:all .2s;user-select:none}
+.d-nav:hover,.d-nav.on{background:rgba(37,99,235,0.12);color:var(--accent3)}
+.d-main{flex:1;padding:22px;overflow:hidden}
+.d-title{font-size:17px;font-weight:700;margin-bottom:3px}
+.d-sub{font-size:11px;color:var(--text3);margin-bottom:20px}
+.d-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.d-card{background:var(--bg4);border:1px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;transition:border-color .2s}
+.d-card:hover{border-color:var(--border2)}
+.d-card-num{font-size:22px;font-weight:800}
+.d-card-num.b{color:var(--accent3)}
+.d-card-num.g{color:var(--green)}
+.d-card-num.o{color:var(--gold)}
+.d-card-num.r{color:#f87171}
+.d-card-lbl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.d-section{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px}
+.d-row{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg4);border:1px solid var(--border);border-radius:9px;margin-bottom:7px;transition:all .2s;cursor:pointer}
+.d-row:first-of-type{border-color:rgba(16,185,129,0.25)}
+.d-row:hover{border-color:var(--accent2);background:rgba(37,99,235,0.06)}
+.d-flag{font-size:18px;width:30px;text-align:center}
+.d-info{flex:1}
+.d-route{font-size:12px;font-weight:600}
+.d-detail{font-size:10px;color:var(--text3)}
+.d-price{font-size:14px;font-weight:800;color:var(--green)}
+.d-new{font-size:9px;font-weight:800;background:rgba(16,185,129,0.12);color:var(--green);padding:2px 7px;border-radius:4px;border:1px solid rgba(16,185,129,0.2)}
+
+/* CTA */
+.cta-block{background:linear-gradient(135deg,rgba(37,99,235,0.1),rgba(124,58,237,0.08));border:1px solid rgba(37,99,235,0.25);border-radius:28px;padding:80px 40px;text-align:center;margin:0 24px 80px;position:relative;overflow:hidden}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(37,99,235,0.15) 0%,transparent 70%);pointer-events:none}
+.cta-title{font-size:clamp(28px,5vw,52px);font-weight:900;letter-spacing:-2px;margin-bottom:14px}
+.cta-sub{font-size:18px;color:var(--text2);margin-bottom:34px}
+.cta-pills{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.cta-pill{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text2)}
+.cta-pill span:first-child{color:var(--green)}
+
+/* PAYMENT */
+.pay-section{text-align:center;padding:36px 24px}
+.pay-label{font-size:11px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;font-weight:600;margin-bottom:14px}
+.pay-logos{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.pay-logo{padding:8px 18px;background:var(--bg3);border:1px solid var(--border);border-radius:9px;font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .2s}
+.pay-logo:hover{border-color:var(--border2);color:var(--text);transform:translateY(-2px)}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;right:28px;background:var(--bg3);border:1px solid var(--border2);border-radius:14px;padding:16px 20px;z-index:9999;display:flex;align-items:center;gap:12px;max-width:360px;box-shadow:0 20px 40px rgba(0,0,0,.5);transform:translateY(100px);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1)}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-icon{font-size:22px;flex-shrink:0}
+.toast-title{font-size:14px;font-weight:700;margin-bottom:2px}
+.toast-sub{font-size:12px;color:var(--text2)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:56px 24px 36px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand p{font-size:13px;color:var(--text3);margin-top:10px;line-height:1.7;max-width:260px}
+.footer-col h4{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text2);margin-bottom:14px}
+.footer-col a{display:block;color:var(--text3);font-size:13px;text-decoration:none;margin-bottom:9px;transition:color .2s;cursor:pointer}
+.footer-col a:hover{color:var(--text)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);flex-wrap:wrap;gap:14px}
+.footer-bottom p{font-size:11px;color:var(--text3)}
+
+/* MODALS */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);z-index:9999;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--bg3);border:1px solid var(--border2);border-radius:24px;padding:40px;max-width:480px;width:100%;position:relative;animation:modalIn .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes modalIn{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close-btn{position:absolute;top:14px;right:14px;width:32px;height:32px;background:var(--bg4);border:1px solid var(--border);border-radius:8px;color:var(--text2);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;line-height:1}
+.modal-close-btn:hover{background:var(--bg);color:var(--text);border-color:var(--border2)}
+input.field,select.field{width:100%;padding:13px 16px;background:var(--bg4);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:14px;outline:none;font-family:inherit;transition:border-color .2s;margin-bottom:10px}
+input.field:focus,select.field:focus{border-color:var(--accent2)}
+select.field option{background:var(--bg3)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
+.divider-or{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--text3);font-size:12px}
+.divider-or::before,.divider-or::after{content:'';flex:1;height:1px;background:var(--border)}
+.social-btns{display:flex;gap:10px;margin-bottom:14px}
+.social-btn{flex:1;padding:11px;background:var(--bg4);border:1px solid var(--border);border-radius:10px;color:var(--text2);cursor:pointer;font-size:12px;font-weight:600;transition:all .2s;font-family:inherit}
+.social-btn:hover{border-color:var(--border2);color:var(--text);background:var(--bg)}
+.social-btn.discord:hover{border-color:rgba(88,101,242,0.5);color:#7289da;background:rgba(88,101,242,0.06)}
+.error-msg{font-size:12px;color:#f87171;margin-top:-6px;margin-bottom:8px;display:none}
+.error-msg.show{display:block}
+.success-box{display:none;text-align:center;padding:20px 0}
+.success-box.show{display:block}
+
+/* ALERT CONFIG MODAL */
+.alert-form .form-section{margin-bottom:20px}
+.alert-form .form-section-title{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .burger{display:flex}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .d-sidebar{display:none}
+  .search-row{grid-template-columns:1fr 1fr;gap:10px}
+  .d-cards{grid-template-columns:repeat(2,1fr)}
+  .plan.featured{transform:none}
+  .hero-btns{flex-direction:column;align-items:center}
+  .btn-main,.btn-outline{width:100%;max-width:320px;text-align:center}
+  .cta-block{padding:50px 24px}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-icon" id="toastIcon">✅</div>
+  <div><div class="toast-title" id="toastTitle">Succès</div><div class="toast-sub" id="toastSub">Action effectuée.</div></div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="logo" onclick="scrollTo('hero')">
+      <div class="logo-icon">✈️</div>
+      Flight<span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Alert</span>Pro
+    </a>
+    <div class="nav-links">
+      <a onclick="scrollTo('features')">Fonctionnalités</a>
+      <a onclick="scrollTo('pricing')">Tarifs</a>
+      <a onclick="scrollTo('dashboard')">Dashboard</a>
+      <a onclick="scrollTo('faq')">FAQ</a>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <a href="#" class="btn-ghost" onclick="openModal('login');return false">Connexion</a>
+      <a href="#" class="btn-nav" onclick="openModal('signup');return false">Essai gratuit →</a>
+      <div class="burger" id="burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="scrollTo('features');toggleMenu()">Fonctionnalités</a>
+  <a onclick="scrollTo('pricing');toggleMenu()">Tarifs</a>
+  <a onclick="scrollTo('dashboard');toggleMenu()">Dashboard</a>
+  <a onclick="scrollTo('faq');toggleMenu()">FAQ</a>
+  <a onclick="openModal('login');toggleMenu()" style="color:var(--accent3)">Connexion</a>
+  <a onclick="openModal('signup');toggleMenu()" style="color:var(--green)">→ Essai gratuit 7 jours</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bg2"></div>
+  <div class="grid-overlay"></div>
+  <div class="badge"><span class="live-dot"></span> IA ACTIVE · 15 SOURCES ANALYSÉES EN TEMPS RÉEL</div>
+  <h1>Trouvez les vols <span class="gold">les moins chers</span><br>avant tout le monde.</h1>
+  <p class="hero-sub">Notre IA surveille 15 plateformes de voyage 24h/24 et vous alerte immédiatement dès qu'un prix baisse ou qu'une offre exceptionnelle apparaît.</p>
+
+  <!-- SEARCH BAR -->
+  <div class="search-bar">
+    <div class="search-row">
+      <div class="search-field" onclick="openModal('alert')">
+        <div class="search-label">Départ</div>
+        <div class="search-val">🇫🇷 Paris CDG</div>
+        <div class="search-sub">Cliquer pour modifier</div>
+      </div>
+      <div class="search-divider"></div>
+      <div class="search-field" onclick="openModal('alert')">
+        <div class="search-label">Destination</div>
+        <div class="search-val">🌍 Partout</div>
+        <div class="search-sub">Cliquer pour choisir</div>
+      </div>
+      <div class="search-divider"></div>
+      <div class="search-field" onclick="openModal('alert')">
+        <div class="search-label">Budget max</div>
+        <div class="search-val">— €</div>
+        <div class="search-sub">Cliquer pour définir</div>
+      </div>
+      <button class="btn-search" onclick="openModal('alert')">🔍 Créer une alerte</button>
+    </div>
+  </div>
+
+  <div class="hero-btns">
+    <a href="#" class="btn-main" onclick="openModal('signup');return false">Commencer gratuitement →</a>
+    <a href="#" class="btn-outline" onclick="scrollTo('features');return false">Voir les fonctionnalités</a>
+  </div>
+
+  <!-- LIVE STATS -->
+  <div class="live-stats">
+    <div class="stat-pill"><span class="stat-icon">✈️</span><strong class="stat-num" id="sc1">28 492</strong><span class="stat-lbl">vols surveillés</span></div>
+    <div class="stat-pill"><span class="stat-icon">🔔</span><strong class="stat-num" id="sc2">5 124</strong><span class="stat-lbl">alertes envoyées aujourd'hui</span></div>
+    <div class="stat-pill"><span class="stat-icon">💰</span><strong class="stat-num">287 €</strong><span class="stat-lbl">économie moyenne/utilisateur</span></div>
+  </div>
+</section>
+
+<!-- LIVE FLIGHTS -->
+<section style="padding:20px 24px 80px" id="live">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:28px">
+      <div class="section-badge">LIVE</div>
+      <p style="font-size:14px;color:var(--text3);margin-top:6px">Dernières offres détectées · Cliquez pour voir le vol</p>
+    </div>
+    <div class="flights-live" id="flightsList">
+      <a class="flight-card new-deal" href="https://www.google.com/flights?hl=fr#flt=CDG.JFK.*" target="_blank" rel="noopener">
+        <div class="airline-logo">🇫🇷</div>
+        <div class="flight-route">
+          <div class="route-main"><span class="city">Paris CDG</span><span class="route-arrow">→</span><span class="city">New York JFK</span></div>
+          <div class="route-detail">Air France · 8h05 direct · 14 mars</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+          <div class="deal-badge error">ERROR FARE 🔥</div>
+          <div class="flight-price"><div class="price-current cheap">189€</div><div class="price-old">742€</div><div class="price-drop">-75%</div></div>
+        </div>
+      </a>
+      <a class="flight-card" href="https://www.skyscanner.fr/transport/flights/cdg/tyoa/" target="_blank" rel="noopener">
+        <div class="airline-logo">🇦🇪</div>
+        <div class="flight-route">
+          <div class="route-main"><span class="city">Paris CDG</span><span class="route-arrow">→</span><span class="city">Tokyo NRT</span></div>
+          <div class="route-detail">Emirates via Dubaï · 16h40 · 22 mars</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+          <div class="deal-badge great">OFFRE EXCEPTIONNELLE</div>
+          <div class="flight-price"><div class="price-current cheap">398€</div><div class="price-old">680€</div><div class="price-drop">-41%</div></div>
+        </div>
+      </a>
+      <a class="flight-card" href="https://www.kayak.fr/flights/LYS-BKK/" target="_blank" rel="noopener">
+        <div class="airline-logo">🇶🇦</div>
+        <div class="flight-route">
+          <div class="route-main"><span class="city">Lyon LYS</span><span class="route-arrow">→</span><span class="city">Bangkok BKK</span></div>
+          <div class="route-detail">Qatar Airways · 14h55 · 1 escale · 8 avril</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+          <div class="deal-badge good">BON PRIX</div>
+          <div class="flight-price"><div class="price-current normal">445€</div><div class="price-old">590€</div><div class="price-drop">-25%</div></div>
+        </div>
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:20px">
+      <a href="#" class="btn-outline" style="font-size:13px;padding:10px 24px" onclick="openModal('signup');return false">Voir toutes les offres →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<div class="sources-section">
+  <div class="sources-label">15 plateformes analysées en continu — cliquez pour visiter</div>
+  <div class="sources-row">
+    <a class="source-chip" href="https://www.google.com/flights" target="_blank" rel="noopener">🔍 Google Flights</a>
+    <a class="source-chip" href="https://www.skyscanner.fr" target="_blank" rel="noopener">🦅 Skyscanner</a>
+    <a class="source-chip" href="https://www.kayak.fr" target="_blank" rel="noopener">🛶 Kayak</a>
+    <a class="source-chip" href="https://www.momondo.fr" target="_blank" rel="noopener">🌍 Momondo</a>
+    <a class="source-chip" href="https://www.expedia.fr/vols" target="_blank" rel="noopener">🏨 Expedia</a>
+    <a class="source-chip" href="https://www.kiwi.com/fr/" target="_blank" rel="noopener">🥝 Kiwi.com</a>
+    <a class="source-chip" href="https://www.airfrance.fr" target="_blank" rel="noopener">✈️ Air France</a>
+    <a class="source-chip" href="https://www.ryanair.com/fr/fr" target="_blank" rel="noopener">🟡 Ryanair</a>
+    <a class="source-chip" href="https://www.easyjet.com/fr" target="_blank" rel="noopener">🟠 EasyJet</a>
+    <a class="source-chip" href="https://www.lufthansa.com/fr/fr" target="_blank" rel="noopener">🇩🇪 Lufthansa</a>
+    <a class="source-chip" href="https://www.emirates.com/fr/french/" target="_blank" rel="noopener">🇦🇪 Emirates</a>
+    <a class="source-chip" href="https://www.qatarairways.com/fr-fr/" target="_blank" rel="noopener">🇶🇦 Qatar Airways</a>
+    <a class="source-chip" href="https://fr.trip.com/flights/" target="_blank" rel="noopener">🌐 Trip.com</a>
+    <a class="source-chip" href="https://www.opodo.fr" target="_blank" rel="noopener">🏢 Opodo</a>
+    <a class="source-chip" href="https://www.booking.com/flights/index.fr.html" target="_blank" rel="noopener">🏷️ Booking Flights</a>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="features" style="padding:100px 24px;background:var(--bg2)">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-badge">Comment ça marche</div>
+      <h2 class="section-title fade-up">3 étapes pour ne <span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">jamais payer trop cher</span></h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step fade-up" onclick="openModal('alert')">
+        <div class="step-num">01</div>
+        <div class="step-icon">🎯</div>
+        <div class="step-title">Configurez vos alertes</div>
+        <div class="step-text">Renseignez votre départ, destination, dates flexibles, budget max et compagnie préférée. Tout est personnalisable.</div>
+        <div style="margin-top:14px;font-size:12px;color:var(--accent3);font-weight:600">→ Créer une alerte maintenant</div>
+      </div>
+      <div class="step fade-up" style="transition-delay:.12s">
+        <div class="step-num">02</div>
+        <div class="step-icon">🤖</div>
+        <div class="step-title">L'IA surveille 24h/24</div>
+        <div class="step-text">Notre IA analyse en permanence 15 plateformes, détecte les baisses de prix, les error fares et les offres exceptionnelles.</div>
+      </div>
+      <div class="step fade-up" style="transition-delay:.24s" onclick="openModal('signup')">
+        <div class="step-num">03</div>
+        <div class="step-icon">📩</div>
+        <div class="step-title">Alerte instantanée</div>
+        <div class="step-text">Dès qu'une offre correspond, vous êtes alerté immédiatement par email, push, Telegram ou Discord selon votre formule.</div>
+        <div style="margin-top:14px;font-size:12px;color:var(--green);font-weight:600">→ Essayer gratuitement</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section style="padding:80px 24px">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-badge">Fonctionnalités</div>
+      <h2 class="section-title fade-up">Tout pour voyager <span style="color:var(--accent3)">au meilleur prix</span></h2>
+    </div>
+    <div class="feat-grid">
+      <div class="feat fade-up" onclick="openModal('alert')">
+        <div class="feat-icon blue">⚡</div>
+        <div class="feat-title">Alertes en temps réel</div>
+        <div class="feat-text">Détection instantanée dès qu'un prix baisse. Soyez le premier informé avant les autres voyageurs.</div>
+        <div style="margin-top:12px;font-size:12px;color:var(--accent3);cursor:pointer;font-weight:600">→ Créer une alerte</div>
+      </div>
+      <div class="feat fade-up" style="transition-delay:.05s" onclick="scrollTo('pricing')">
+        <div class="feat-icon gold">🔥</div>
+        <div class="feat-title">Détection Error Fares</div>
+        <div class="feat-text">Notre IA détecte les erreurs tarifaires des compagnies — parfois -80% sur des vols long courrier.</div>
+        <div style="margin-top:12px;font-size:12px;color:var(--gold);cursor:pointer;font-weight:600">→ Voir les formules</div>
+      </div>
+      <div class="feat fade-up" style="transition-delay:.1s" onclick="scrollTo('pricing')">
+        <div class="feat-icon green">🧠</div>
+        <div class="feat-title">IA Prédictive</div>
+        <div class="feat-text">Le système apprend quand les prix vont baisser et vous conseille le meilleur moment pour acheter.</div>
+        <div style="margin-top:12px;font-size:12px;color:var(--green);cursor:pointer;font-weight:600">→ Disponible en Premium</div>
+      </div>
+      <div class="feat fade-up" style="transition-delay:.15s" onclick="scrollTo('dashboard')">
+        <div class="feat-icon purple">📊</div>
+        <div class="feat-title">Historique des prix</div>
+        <div class="feat-text">Visualisez l'évolution du prix de vos vols sur les 30 derniers jours avec des graphiques clairs.</div>
+        <div style="margin-top:12px;font-size:12px;color:var(--accent3);cursor:pointer;font-weight:600">→ Voir le dashboard</div>
+      </div>
+      <div class="feat fade-up" style="transition-delay:.2s">
+        <div class="feat-icon blue">🌐</div>
+        <div class="feat-title">15 sources comparées</div>
+        <div class="feat-text">Google Flights, Skyscanner, Kayak, Momondo, Emirates, Qatar Airways et bien d'autres.</div>
+      </div>
+      <div class="feat fade-up" style="transition-delay:.25s" onclick="scrollTo('pricing')">
+        <div class="feat-icon green">📱</div>
+        <div class="feat-title">Multi-notifications</div>
+        <div class="feat-text">Recevez vos alertes par email, push mobile, Telegram et Discord (selon la formule).</div>
+        <div style="margin-top:12px;font-size:12px;color:var(--green);cursor:pointer;font-weight:600">→ Voir les formules</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD PREVIEW -->
+<section id="dashboard" style="padding:80px 24px;background:var(--bg2)">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-badge">Dashboard</div>
+      <h2 class="section-title fade-up">Un espace de contrôle <span style="color:var(--accent3)">complet</span></h2>
+      <p class="section-sub fade-up">Gérez tout depuis votre espace personnel après inscription.</p>
+    </div>
+    <div class="dash-preview fade-up">
+      <div class="dash-bar">
+        <div class="d-dots">
+          <span title="Fermer" onclick="showToast('💡','Démo uniquement','Le dashboard complet est accessible après inscription.')"></span>
+          <span title="Réduire"></span>
+          <span title="Plein écran" onclick="openModal('signup')"></span>
+        </div>
+        <div class="d-url">app.flightalertpro.fr · Dashboard</div>
+        <div style="font-size:11px;color:var(--green)">● IA ACTIVE</div>
+      </div>
+      <div class="dash-body">
+        <div class="d-sidebar">
+          <div class="d-logo">✈️ FAP</div>
+          <div class="d-nav on" onclick="showToast('🏠','Dashboard','Votre tableau de bord principal.')">🏠 Dashboard</div>
+          <div class="d-nav" onclick="openModal('alert')">🔔 Mes alertes</div>
+          <div class="d-nav" onclick="openModal('alert')">✈️ Mes vols</div>
+          <div class="d-nav" onclick="showToast('📊','Statistiques','Disponible après inscription. Visualisez vos économies.')">📊 Statistiques</div>
+          <div class="d-nav" onclick="scrollTo('pricing')">💳 Abonnement</div>
+          <div class="d-nav" onclick="openModal('signup')">⚙️ Paramètres</div>
+        </div>
+        <div class="d-main">
+          <div class="d-title">Bonjour, Sophie ✈️</div>
+          <div class="d-sub">Formule Pro · 12 alertes actives · IA en surveillance</div>
+          <div class="d-cards">
+            <div class="d-card" onclick="openModal('alert')"><div class="d-card-num b">12</div><div class="d-card-lbl">Alertes actives</div></div>
+            <div class="d-card" onclick="showToast('✈️','Offres détectées','47 offres correspondent à vos alertes aujourd\'hui.')"><div class="d-card-num g">47</div><div class="d-card-lbl">Offres détectées</div></div>
+            <div class="d-card" onclick="showToast('💰','Économies','Vous avez économisé 312€ grâce à FlightAlert Pro.')"><div class="d-card-num o">312€</div><div class="d-card-lbl">Économisé</div></div>
+            <div class="d-card" onclick="showToast('🔥','Error Fares','2 erreurs tarifaires détectées cette semaine !')"><div class="d-card-num r">2</div><div class="d-card-lbl">Error fares</div></div>
+          </div>
+          <div class="d-section">🔥 Dernières offres pour vous</div>
+          <div class="d-row" onclick="window.open('https://www.google.com/flights?hl=fr#flt=CDG.NRT.*','_blank')">
+            <div class="d-flag">🇯🇵</div>
+            <div class="d-info"><div class="d-route">Paris → Tokyo</div><div class="d-detail">Emirates · 22 mars · Aller-retour</div></div>
+            <div style="text-align:right"><div class="d-price">398€</div><div class="d-new">NOUVEAU</div></div>
+          </div>
+          <div class="d-row" onclick="window.open('https://www.google.com/flights?hl=fr#flt=CDG.JFK.*','_blank')">
+            <div class="d-flag">🇺🇸</div>
+            <div class="d-info"><div class="d-route">Paris → New York</div><div class="d-detail">Air France · 14 mars · Direct</div></div>
+            <div style="text-align:right"><div class="d-price">189€</div></div>
+          </div>
+          <div class="d-row" onclick="window.open('https://www.kayak.fr/flights/LYS-BKK/','_blank')">
+            <div class="d-flag">🇹🇭</div>
+            <div class="d-info"><div class="d-route">Lyon → Bangkok</div><div class="d-detail">Qatar Airways · 8 avril · 1 escale</div></div>
+            <div style="text-align:right"><div class="d-price">445€</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:24px">
+      <a href="#" class="btn-main" onclick="openModal('signup');return false">Accéder à mon dashboard →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="padding:100px 24px">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-badge">Tarifs</div>
+      <h2 class="section-title fade-up">Commencez <span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">gratuitement</span></h2>
+      <p class="section-sub fade-up">Essai 7 jours gratuit. Sans carte bancaire.</p>
+    </div>
+    <div class="pricing-grid">
+      <!-- BASIC -->
+      <div class="plan fade-up" onclick="openModal('basic')">
+        <div class="plan-name">Basic</div>
+        <div class="plan-price"><sup>€</sup>9<sub>,99/mois</sub></div>
+        <div class="plan-desc">Pour commencer à économiser</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-feats">
+          <li>3 alertes actives</li>
+          <li>Notifications email</li>
+          <li>Recherche toutes les 6h</li>
+          <li>Accès aux offres classiques</li>
+          <li>Support standard</li>
+        </ul>
+        <button class="btn-plan outline" onclick="event.stopPropagation();openModal('basic')">Choisir Basic — 9,99€/mois</button>
+      </div>
+      <!-- PRO -->
+      <div class="plan featured fade-up" style="transition-delay:.1s" onclick="openModal('pro')">
+        <div class="plan-badge">⭐ POPULAIRE</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price"><sup>€</sup>24<sub>,99/mois</sub></div>
+        <div class="plan-desc">Le plus choisi par nos voyageurs</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-feats">
+          <li>15 alertes actives</li>
+          <li>Notifications instantanées</li>
+          <li>Email + push mobile</li>
+          <li>Recherche toutes les heures</li>
+          <li>Historique des prix</li>
+          <li>Détection baisses importantes</li>
+          <li>Support prioritaire</li>
+        </ul>
+        <button class="btn-plan filled" onclick="event.stopPropagation();openModal('pro')">Choisir Pro — 24,99€/mois →</button>
+      </div>
+      <!-- PREMIUM -->
+      <div class="plan fade-up" style="transition-delay:.2s" onclick="openModal('premium')">
+        <div class="plan-name">Premium</div>
+        <div class="plan-price"><sup>€</sup>59<sub>,99/mois</sub></div>
+        <div class="plan-desc">Pour les voyageurs exigeants</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-feats">
+          <li>Alertes illimitées</li>
+          <li>Surveillance temps réel</li>
+          <li>IA prédictive des prix</li>
+          <li>Détection error fares</li>
+          <li>SMS + Telegram + Discord</li>
+          <li>Accès API</li>
+          <li>Recommandations voyage IA</li>
+          <li>Support VIP 24h/24</li>
+        </ul>
+        <button class="btn-plan gold-btn" onclick="event.stopPropagation();openModal('premium')">Choisir Premium — 59,99€/mois</button>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:28px">
+      <span style="display:inline-block;padding:8px 20px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:100px;font-size:13px;color:var(--green);font-weight:600;cursor:pointer" onclick="openModal('pro')">🎁 7 jours gratuits — Aucune carte bancaire requise</span>
+    </div>
+    <!-- COMPARE TABLE -->
+    <div style="margin-top:48px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;overflow:hidden;max-width:740px;margin-left:auto;margin-right:auto" class="fade-up">
+      <div style="padding:20px 24px;border-bottom:1px solid var(--border);font-size:15px;font-weight:700">Comparatif détaillé</div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border)">
+              <th style="padding:14px 20px;text-align:left;color:var(--text2);font-weight:600">Fonctionnalité</th>
+              <th style="padding:14px;text-align:center;color:var(--text2);font-weight:600;cursor:pointer" onclick="openModal('basic')">Basic</th>
+              <th style="padding:14px;text-align:center;color:var(--accent3);font-weight:700;cursor:pointer" onclick="openModal('pro')">Pro ⭐</th>
+              <th style="padding:14px;text-align:center;color:var(--gold);font-weight:600;cursor:pointer" onclick="openModal('premium')">Premium</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:12px 20px;color:var(--text2)">Alertes actives</td><td style="padding:12px;text-align:center;color:var(--text2)">3</td><td style="padding:12px;text-align:center;color:var(--accent3);font-weight:700">15</td><td style="padding:12px;text-align:center;color:var(--gold)">∞</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:12px 20px;color:var(--text2)">Fréquence analyse</td><td style="padding:12px;text-align:center;color:var(--text2)">6h</td><td style="padding:12px;text-align:center;color:var(--accent3);font-weight:700">1h</td><td style="padding:12px;text-align:center;color:var(--gold)">Temps réel</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:12px 20px;color:var(--text2)">Email</td><td style="padding:12px;text-align:center">✅</td><td style="padding:12px;text-align:center">✅</td><td style="padding:12px;text-align:center">✅</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:12px 20px;color:var(--text2)">Push + SMS</td><td style="padding:12px;text-align:center;color:var(--text3)">—</td><td style="padding:12px;text-align:center">✅</td><td style="padding:12px;text-align:center">✅</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:12px 20px;color:var(--text2)">Telegram / Discord</td><td style="padding:12px;text-align:center;color:var(--text3)">—</td><td style="padding:12px;text-align:center;color:var(--text3)">—</td><td style="padding:12px;text-align:center">✅</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:12px 20px;color:var(--text2)">Error fares IA</td><td style="padding:12px;text-align:center;color:var(--text3)">—</td><td style="padding:12px;text-align:center;color:var(--text3)">—</td><td style="padding:12px;text-align:center">✅</td></tr>
+            <tr><td style="padding:12px 20px;color:var(--text2)">IA prédictive prix</td><td style="padding:12px;text-align:center;color:var(--text3)">—</td><td style="padding:12px;text-align:center;color:var(--text3)">—</td><td style="padding:12px;text-align:center">✅</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<div class="pay-section">
+  <div class="pay-label">Paiements 100% sécurisés</div>
+  <div class="pay-logos">
+    <div class="pay-logo" onclick="showToast('💳','Stripe','Paiement sécurisé par Stripe. Vos données bancaires sont chiffrées.')">💳 Stripe</div>
+    <div class="pay-logo" onclick="showToast('🅿️','PayPal','Payez en toute sécurité via votre compte PayPal.')">🅿️ PayPal</div>
+    <div class="pay-logo" onclick="showToast(' ','Apple Pay','Paiement rapide avec Touch ID ou Face ID.')"> Apple Pay</div>
+    <div class="pay-logo" onclick="showToast('G','Google Pay','Paiez en un clic avec votre compte Google.')">G Google Pay</div>
+    <div class="pay-logo" onclick="showToast('🏦','Carte bancaire','Visa, Mastercard, Amex acceptées.')">🏦 CB / VISA</div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section style="padding:80px 24px;background:var(--bg2)">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-badge">Témoignages</div>
+      <h2 class="section-title fade-up">Ils voyagent <span style="color:var(--accent3)">moins cher</span> grâce à nous</h2>
+    </div>
+    <div class="testimonials">
+      <div class="testimonial fade-up">
+        <div class="t-stars">★★★★★</div>
+        <div class="t-text">"J'ai eu une alerte pour un Paris–Tokyo à 398€ aller-retour. Sans FlightAlertPro je n'aurais jamais vu ça. J'économise au moins 300€ à chaque voyage maintenant."</div>
+        <div class="t-author"><div class="t-avatar" style="background:rgba(37,99,235,0.12)">👤</div><div><div class="t-name">Sophie M.</div><div class="t-role">Formule Pro · Bordeaux</div></div></div>
+      </div>
+      <div class="testimonial fade-up" style="transition-delay:.1s">
+        <div class="t-stars">★★★★★</div>
+        <div class="t-text">"L'alerte Error Fare m'a envoyé un vol Paris–New York à 189€. J'ai payé directement depuis l'email. Incroyable. Je recommande à tous mes amis voyageurs."</div>
+        <div class="t-author"><div class="t-avatar" style="background:rgba(245,158,11,0.12)">👤</div><div><div class="t-name">Karim B.</div><div class="t-role">Formule Premium · Paris</div></div></div>
+      </div>
+      <div class="testimonial fade-up" style="transition-delay:.2s">
+        <div class="t-stars">★★★★★</div>
+        <div class="t-text">"Le système IA qui prédit les baisses de prix est bluffant. J'ai attendu comme conseillé et le vol est bien descendu. Vraiment impressionnant."</div>
+        <div class="t-author"><div class="t-avatar" style="background:rgba(16,185,129,0.12)">👤</div><div><div class="t-name">Léa R.</div><div class="t-role">Formule Premium · Lyon</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="padding:80px 24px">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-badge">FAQ</div>
+      <h2 class="section-title fade-up">Questions fréquentes</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Comment fonctionne la détection des prix ? <span class="faq-icon">+</span></div><div class="faq-a"><p>Notre système analyse automatiquement 15 plateformes de voyage toutes les heures (chaque minute sur Premium). Il compare les prix en temps réel et envoie une alerte dès qu'un vol correspond à vos critères ou qu'une baisse est détectée.</p></div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Qu'est-ce qu'un "Error Fare" ? <span class="faq-icon">+</span></div><div class="faq-a"><p>Un error fare est une erreur tarifaire d'une compagnie aérienne — un vol affiché à un prix anormalement bas (parfois -80% du prix normal). Notre IA détecte ces erreurs en quelques secondes et vous alerte avant qu'elles soient corrigées.</p></div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">L'essai gratuit nécessite-t-il une carte bancaire ? <span class="faq-icon">+</span></div><div class="faq-a"><p>Non, l'essai gratuit 7 jours est accessible sans aucune carte bancaire. Vous pouvez tester toutes les fonctionnalités gratuitement. Le paiement n'est demandé qu'à la fin de la période d'essai si vous souhaitez continuer.</p></div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Puis-je modifier mes alertes à tout moment ? <span class="faq-icon">+</span></div><div class="faq-a"><p>Oui, vous pouvez ajouter, modifier ou supprimer vos alertes à tout moment depuis votre dashboard. Les modifications sont prises en compte immédiatement par notre système de surveillance.</p></div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Comment annuler mon abonnement ? <span class="faq-icon">+</span></div><div class="faq-a"><p>Vous pouvez annuler à tout moment depuis votre dashboard → Abonnement → Annuler. Aucun frais d'annulation. Si vous n'êtes pas satisfait dans les 14 premiers jours, nous remboursons intégralement votre paiement.</p></div></div>
+      <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Les notifications Telegram et Discord sont-elles disponibles ? <span class="faq-icon">+</span></div><div class="faq-a"><p>Oui, les notifications Telegram et Discord sont exclusivement disponibles sur la formule Premium. Vous pouvez les configurer facilement depuis votre dashboard après inscription.</p></div></div>
+    </div>
+    <div style="text-align:center;margin-top:30px">
+      <a href="#" style="font-size:13px;color:var(--accent3);text-decoration:none;font-weight:600" onclick="openModal('contact');return false">Vous avez une autre question ? Contactez-nous →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div style="max-width:1200px;margin:0 auto">
+  <div class="cta-block">
+    <div class="cta-glow"></div>
+    <div class="cta-title">Prêt à économiser<br>sur chaque voyage ?</div>
+    <p class="cta-sub">Rejoignez 5 000+ voyageurs qui utilisent FlightAlert Pro.</p>
+    <div class="cta-pills">
+      <div class="cta-pill"><span>✓</span><span>Setup en 2 minutes</span></div>
+      <div class="cta-pill"><span>✓</span><span>7 jours gratuits</span></div>
+      <div class="cta-pill"><span>✓</span><span>Sans engagement</span></div>
+      <div class="cta-pill"><span>✓</span><span>Remboursé si insatisfait</span></div>
+    </div>
+    <a href="#" class="btn-main" onclick="openModal('signup');return false">Démarrer l'essai gratuit →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div style="display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;cursor:pointer" onclick="scrollTo('hero')">
+          <div class="logo-icon">✈️</div>
+          FlightAlert<span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Pro</span>
+        </div>
+        <p>Le système d'alertes vols le plus rapide. Économisez sur chaque voyage grâce à l'IA.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Produit</h4>
+        <a onclick="scrollTo('features')">Fonctionnalités</a>
+        <a onclick="scrollTo('pricing')">Tarifs</a>
+        <a onclick="scrollTo('dashboard')">Dashboard</a>
+        <a onclick="showToast('🔧','API','Documentation API disponible en formule Premium.')">API</a>
+      </div>
+      <div class="footer-col">
+        <h4>Compte</h4>
+        <a onclick="openModal('login')">Connexion</a>
+        <a onclick="openModal('signup')">Inscription</a>
+        <a onclick="openModal('pro')">Essai gratuit 7j</a>
+        <a onclick="showToast('🤝','Affiliation','Programme d\'affiliation : gagnez 30% de commission par filleul.')">Affiliation</a>
+      </div>
+      <div class="footer-col">
+        <h4>Légal</h4>
+        <a onclick="showToast('📄','Mentions légales','Page en construction.')">Mentions légales</a>
+        <a onclick="showToast('📋','CGU','Conditions Générales d\'Utilisation — page en construction.')">CGU</a>
+        <a onclick="showToast('🔒','Confidentialité','Politique de confidentialité RGPD — page en construction.')">Confidentialité</a>
+        <a onclick="openModal('contact')">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 FlightAlert Pro. Tous droits réservés.</p>
+      <div style="display:flex;gap:16px">
+        <a href="https://twitter.com" target="_blank" style="color:var(--text3);font-size:16px;text-decoration:none" title="Twitter">𝕏</a>
+        <a href="https://discord.com" target="_blank" style="color:var(--text3);font-size:14px;text-decoration:none;font-weight:700" title="Discord">Discord</a>
+        <a href="https://t.me" target="_blank" style="color:var(--text3);font-size:14px;text-decoration:none;font-weight:700" title="Telegram">Telegram</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== MODALS ===== -->
+
+<!-- MODAL INSCRIPTION -->
+<div class="modal-overlay" id="modal-signup">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('signup')">×</button>
+    <div id="signup-form-view">
+      <div style="font-size:36px;margin-bottom:12px">✈️</div>
+      <h3 style="font-size:22px;font-weight:800;margin-bottom:6px" id="signup-title">Essai gratuit 7 jours</h3>
+      <p style="color:var(--text2);font-size:13px;margin-bottom:20px">Sans carte bancaire · Annulez quand vous voulez</p>
+      <div class="social-btns">
+        <button class="social-btn" onclick="fakeOAuth('Google')">G &nbsp; Continuer avec Google</button>
+        <button class="social-btn discord" onclick="fakeOAuth('Discord')">⬤ &nbsp; Discord</button>
+      </div>
+      <div class="divider-or">ou avec votre email</div>
+      <input type="email" class="field" id="signup-email" placeholder="Votre adresse email" oninput="clearError('signup-email-err')">
+      <div class="error-msg" id="signup-email-err">Veuillez entrer un email valide.</div>
+      <input type="password" class="field" id="signup-pwd" placeholder="Créer un mot de passe (min. 8 caractères)" oninput="clearError('signup-pwd-err')">
+      <div class="error-msg" id="signup-pwd-err">Le mot de passe doit contenir au moins 8 caractères.</div>
+      <input type="text" class="field" id="signup-name" placeholder="Votre prénom">
+      <button class="btn-main" style="width:100%;margin-top:6px" onclick="submitSignup()">Créer mon compte gratuit →</button>
+      <p style="font-size:12px;color:var(--text3);margin-top:14px;text-align:center">Vous avez déjà un compte ? <a href="#" style="color:var(--accent3);text-decoration:none" onclick="switchModal('signup','login')">Se connecter</a></p>
+    </div>
+    <div class="success-box" id="signup-success">
+      <div style="font-size:48px;margin-bottom:16px">🎉</div>
+      <h3 style="font-size:20px;font-weight:800;margin-bottom:8px">Compte créé !</h3>
+      <p style="color:var(--text2);font-size:14px;margin-bottom:24px">Un email de confirmation a été envoyé. Vérifiez votre boîte mail pour activer votre compte.</p>
+      <button class="btn-main" style="width:100%" onclick="closeModal('signup')">Parfait, merci !</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CONNEXION -->
+<div class="modal-overlay" id="modal-login">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('login')">×</button>
+    <div style="font-size:36px;margin-bottom:12px">🔑</div>
+    <h3 style="font-size:22px;font-weight:800;margin-bottom:6px">Connexion</h3>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:20px">Accédez à votre dashboard</p>
+    <div class="social-btns">
+      <button class="social-btn" onclick="fakeOAuth('Google')">G &nbsp; Google</button>
+      <button class="social-btn discord" onclick="fakeOAuth('Discord')">⬤ &nbsp; Discord</button>
+    </div>
+    <div class="divider-or">ou</div>
+    <input type="email" class="field" id="login-email" placeholder="Votre email">
+    <input type="password" class="field" id="login-pwd" placeholder="Votre mot de passe">
+    <div style="text-align:right;margin-bottom:12px"><a href="#" style="font-size:12px;color:var(--accent3);text-decoration:none" onclick="switchModal('login','forgot')">Mot de passe oublié ?</a></div>
+    <button class="btn-main" style="width:100%" onclick="submitLogin()">Se connecter →</button>
+    <p style="font-size:12px;color:var(--text3);margin-top:14px;text-align:center">Pas de compte ? <a href="#" style="color:var(--green);text-decoration:none" onclick="switchModal('login','signup')">Essai gratuit 7 jours →</a></p>
+  </div>
+</div>
+
+<!-- MODAL MOT DE PASSE OUBLIÉ -->
+<div class="modal-overlay" id="modal-forgot">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('forgot')">×</button>
+    <div style="font-size:36px;margin-bottom:12px">📧</div>
+    <h3 style="font-size:22px;font-weight:800;margin-bottom:6px">Mot de passe oublié</h3>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:20px">Entrez votre email, nous vous envoyons un lien de réinitialisation.</p>
+    <input type="email" class="field" id="forgot-email" placeholder="Votre adresse email">
+    <button class="btn-main" style="width:100%;margin-top:4px" onclick="submitForgot()">Envoyer le lien →</button>
+    <p style="font-size:12px;color:var(--text3);margin-top:14px;text-align:center"><a href="#" style="color:var(--accent3);text-decoration:none" onclick="switchModal('forgot','login')">← Retour à la connexion</a></p>
+  </div>
+</div>
+
+<!-- MODAL CRÉER UNE ALERTE -->
+<div class="modal-overlay" id="modal-alert">
+  <div class="modal-box" style="max-width:540px">
+    <button class="modal-close-btn" onclick="closeModal('alert')">×</button>
+    <div style="font-size:36px;margin-bottom:12px">🔔</div>
+    <h3 style="font-size:22px;font-weight:800;margin-bottom:6px">Créer une alerte vol</h3>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:20px">Recevez une notification dès qu'un vol correspond à vos critères.</p>
+    <div class="alert-form">
+      <div class="form-row">
+        <div>
+          <div class="field-label">Ville de départ</div>
+          <input type="text" class="field" placeholder="Ex : Paris CDG" value="Paris CDG">
+        </div>
+        <div>
+          <div class="field-label">Destination</div>
+          <input type="text" class="field" placeholder="Ex : Tokyo, Bali...">
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <div class="field-label">Budget maximum</div>
+          <input type="number" class="field" placeholder="Ex : 500" min="50" max="10000">
+        </div>
+        <div>
+          <div class="field-label">Nombre de passagers</div>
+          <select class="field"><option>1 passager</option><option>2 passagers</option><option>3 passagers</option><option>4+</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <div class="field-label">Classe</div>
+          <select class="field"><option>Économique</option><option>Économique Premium</option><option>Business</option><option>Première</option></select>
+        </div>
+        <div>
+          <div class="field-label">Escales</div>
+          <select class="field"><option>Sans préférence</option><option>Direct uniquement</option><option>Max 1 escale</option></select>
+        </div>
+      </div>
+      <div>
+        <div class="field-label">Période souhaitée</div>
+        <div class="form-row">
+          <input type="date" class="field">
+          <input type="date" class="field">
+        </div>
+      </div>
+    </div>
+    <button class="btn-main" style="width:100%" onclick="submitAlert()">Activer cette alerte →</button>
+    <p style="font-size:11px;color:var(--text3);margin-top:10px;text-align:center">Vous devrez créer un compte ou vous connecter pour activer l'alerte.</p>
+  </div>
+</div>
+
+<!-- MODAL PAIEMENT (Basic / Pro / Premium) -->
+<div class="modal-overlay" id="modal-basic"><div class="modal-box"><button class="modal-close-btn" onclick="closeModal('basic')">×</button><div id="basic-view"><div style="font-size:36px;margin-bottom:12px">✈️</div><h3 style="font-size:22px;font-weight:800;margin-bottom:4px">Formule Basic</h3><div style="font-size:36px;font-weight:900;margin:8px 0">9,99€<span style="font-size:16px;font-weight:400;color:var(--text2)">/mois</span></div><p style="color:var(--text2);font-size:13px;margin-bottom:20px">7 jours gratuits · Puis 9,99€/mois · Annulable à tout moment</p><input type="email" class="field" placeholder="Votre email"><input type="password" class="field" placeholder="Créer un mot de passe"><button class="btn-plan outline" style="width:100%;margin-top:4px" onclick="submitPayment('Basic','9,99€')">Démarrer l'essai gratuit →</button><p style="font-size:11px;color:var(--text3);margin-top:12px;text-align:center">🔒 Paiement sécurisé Stripe · Aucune CB requise pour l'essai</p></div></div></div>
+
+<div class="modal-overlay" id="modal-pro"><div class="modal-box"><button class="modal-close-btn" onclick="closeModal('pro')">×</button><div id="pro-view"><div style="font-size:36px;margin-bottom:12px">⭐</div><h3 style="font-size:22px;font-weight:800;margin-bottom:4px">Formule Pro</h3><div style="font-size:36px;font-weight:900;margin:8px 0">24,99€<span style="font-size:16px;font-weight:400;color:var(--text2)">/mois</span></div><p style="color:var(--text2);font-size:13px;margin-bottom:20px">7 jours gratuits · Puis 24,99€/mois · Annulable à tout moment</p><input type="email" class="field" placeholder="Votre email"><input type="password" class="field" placeholder="Créer un mot de passe"><div class="social-btns"><button class="social-btn" onclick="fakeOAuth('Google')">G &nbsp;Google</button><button class="social-btn discord" onclick="fakeOAuth('Discord')">⬤ &nbsp;Discord</button></div><button class="btn-plan filled" style="width:100%;margin-top:4px" onclick="submitPayment('Pro','24,99€')">Démarrer l'essai gratuit →</button><p style="font-size:11px;color:var(--text3);margin-top:12px;text-align:center">🔒 Paiement sécurisé Stripe · Aucune CB requise pour l'essai</p></div></div></div>
+
+<div class="modal-overlay" id="modal-premium"><div class="modal-box"><button class="modal-close-btn" onclick="closeModal('premium')">×</button><div id="premium-view"><div style="font-size:36px;margin-bottom:12px">👑</div><h3 style="font-size:22px;font-weight:800;margin-bottom:4px">Formule Premium</h3><div style="font-size:36px;font-weight:900;color:var(--gold);margin:8px 0">59,99€<span style="font-size:16px;font-weight:400;color:var(--text2)">/mois</span></div><p style="color:var(--text2);font-size:13px;margin-bottom:20px">7 jours gratuits · Puis 59,99€/mois · Annulable à tout moment</p><input type="email" class="field" placeholder="Votre email"><input type="password" class="field" placeholder="Créer un mot de passe"><button class="btn-plan gold-btn" style="width:100%;margin-top:4px" onclick="submitPayment('Premium','59,99€')">Démarrer l'essai gratuit →</button><p style="font-size:11px;color:var(--text3);margin-top:12px;text-align:center">🔒 Paiement sécurisé Stripe · Aucune CB requise pour l'essai</p></div></div></div>
+
+<!-- MODAL CONTACT -->
+<div class="modal-overlay" id="modal-contact">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('contact')">×</button>
+    <div style="font-size:36px;margin-bottom:12px">💬</div>
+    <h3 style="font-size:22px;font-weight:800;margin-bottom:6px">Nous contacter</h3>
+    <p style="color:var(--text2);font-size:13px;margin-bottom:20px">Réponse sous 24h en semaine.</p>
+    <input type="text" class="field" placeholder="Votre prénom">
+    <input type="email" class="field" placeholder="Votre email">
+    <textarea class="field" placeholder="Votre message..." style="height:100px;resize:vertical;padding-top:12px"></textarea>
+    <button class="btn-main" style="width:100%" onclick="submitContact()">Envoyer le message →</button>
+  </div>
+</div>
+
+<script>
+// ---- SCROLL HELPERS ----
+function scrollTo(id){
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+window.addEventListener('scroll',()=>{
+  const s = document.getElementById('navbar');
+  s.classList.toggle('scrolled', window.scrollY > 20);
+  // Active nav link
+  const sections = ['features','pricing','dashboard','faq'];
+  let current = '';
+  sections.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el && window.scrollY >= el.offsetTop - 120) current = id;
+  });
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.classList.toggle('active-link', a.textContent.toLowerCase().includes(current.replace('features','fonct').replace('pricing','tarif').replace('dashboard','dash').replace('faq','faq')));
+  });
+});
+
+// ---- MOBILE MENU ----
+function toggleMenu(){
+  const m = document.getElementById('mobileMenu');
+  m.classList.toggle('open');
+}
+
+// ---- FADE UP ----
+const obs = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+// ---- COUNTERS ----
+function animCount(el,end,dur){
+  let s=0,step=end/(dur/16);
+  const t=setInterval(()=>{s=Math.min(s+step,end);el.textContent=Math.floor(s).toLocaleString('fr');if(s>=end)clearInterval(t)},16);
+}
+window.addEventListener('load',()=>{
+  animCount(document.getElementById('sc1'),28492,2000);
+  animCount(document.getElementById('sc2'),5124,1800);
+});
+setInterval(()=>{
+  const el=document.getElementById('sc1');
+  const v=parseInt(el.textContent.replace(/\s/g,''))||28492;
+  el.textContent=(v+Math.floor(Math.random()*4+1)).toLocaleString('fr');
+},3500);
+
+// ---- LIVE FLIGHTS ----
+const newFlights=[
+  {flag:'🇧🇦',from:'Marseille MRS',to:'Bali DPS',airline:'Qatar Airways',detail:'20h15 · 1 escale · 15 mai',price:'512€',old:'890€',drop:'-42%',type:'great',bl:'OFFRE EXCEPTIONNELLE',url:'https://www.skyscanner.fr/transport/flights/mrs/dpsa/'},
+  {flag:'🇨🇦',from:'Paris CDG',to:'Montréal YUL',airline:'Air Transat',detail:'7h55 direct · 20 mars',price:'249€',old:'445€',drop:'-44%',type:'error',bl:'ERROR FARE 🔥',url:'https://www.google.com/flights?hl=fr#flt=CDG.YUL.*'},
+  {flag:'🇦🇺',from:'Lyon LYS',to:'Sydney SYD',airline:'Emirates',detail:'24h05 · 1 escale · 3 juin',price:'689€',old:'1100€',drop:'-37%',type:'great',bl:'OFFRE EXCEPTIONNELLE',url:'https://www.kayak.fr/flights/LYS-SYD/'},
+  {flag:'🇪🇸',from:'Paris CDG',to:'Miami MIA',airline:'Iberia',detail:'10h20 via Madrid · 28 mars',price:'320€',old:'580€',drop:'-45%',type:'good',bl:'BON PRIX',url:'https://www.google.com/flights?hl=fr#flt=CDG.MIA.*'},
+];
+let fi=0;
+setInterval(()=>{
+  const list=document.getElementById('flightsList');
+  const f=newFlights[fi%newFlights.length];
+  const a=document.createElement('a');
+  a.className='flight-card new-deal';
+  a.href=f.url; a.target='_blank'; a.rel='noopener';
+  a.innerHTML=`<div class="airline-logo">${f.flag}</div><div class="flight-route"><div class="route-main"><span class="city">${f.from}</span><span class="route-arrow">→</span><span class="city">${f.to}</span></div><div class="route-detail">${f.airline} · ${f.detail}</div></div><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><div class="deal-badge ${f.type}">${f.bl}</div><div class="flight-price"><div class="price-current cheap">${f.price}</div><div class="price-old">${f.old}</div><div class="price-drop">${f.drop}</div></div></div>`;
+  list.insertBefore(a,list.firstChild);
+  if(list.children.length>4) list.removeChild(list.lastChild);
+  fi++;
+},5000);
+
+// ---- FAQ ----
+function toggleFaq(item){
+  const was=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!was) item.classList.add('open');
+}
+
+// ---- MODALS ----
+function openModal(name){
+  closeAllModals();
+  const m = document.getElementById('modal-'+name);
+  if(m){ m.classList.add('open'); document.body.style.overflow='hidden'; }
+}
+function closeModal(name){
+  const m=document.getElementById('modal-'+name);
+  if(m){ m.classList.remove('open'); document.body.style.overflow=''; }
+}
+function closeAllModals(){
+  document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.remove('open'));
+  document.body.style.overflow='';
+}
+function switchModal(from,to){ closeModal(from); setTimeout(()=>openModal(to),200); }
+// Close on backdrop click
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',function(e){ if(e.target===this) closeAllModals(); });
+});
+// Close on Escape
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeAllModals(); });
+
+// ---- TOAST ----
+let toastTimeout;
+function showToast(icon,title,sub){
+  const t=document.getElementById('toast');
+  document.getElementById('toastIcon').textContent=icon;
+  document.getElementById('toastTitle').textContent=title;
+  document.getElementById('toastSub').textContent=sub;
+  t.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout=setTimeout(()=>t.classList.remove('show'),4000);
+}
+
+// ---- FORM HELPERS ----
+function clearError(id){ document.getElementById(id).classList.remove('show'); }
+function showError(id){ document.getElementById(id).classList.add('show'); }
+function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+// ---- FORM SUBMISSIONS ----
+function submitSignup(){
+  const email=document.getElementById('signup-email').value.trim();
+  const pwd=document.getElementById('signup-pwd').value;
+  let valid=true;
+  if(!isValidEmail(email)){ showError('signup-email-err'); valid=false; }
+  if(pwd.length<8){ showError('signup-pwd-err'); valid=false; }
+  if(!valid) return;
+  // Simulate success
+  document.getElementById('signup-form-view').style.display='none';
+  document.getElementById('signup-success').classList.add('show');
+  showToast('🎉','Compte créé !','Vérifiez votre email pour confirmer votre compte.');
+}
+function submitLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const pwd=document.getElementById('login-pwd').value;
+  if(!isValidEmail(email)||!pwd){ showToast('⚠️','Erreur','Veuillez remplir tous les champs correctement.'); return; }
+  closeModal('login');
+  showToast('✅','Connexion réussie !','Bienvenue sur FlightAlert Pro.');
+}
+function submitForgot(){
+  const email=document.getElementById('forgot-email').value.trim();
+  if(!isValidEmail(email)){ showToast('⚠️','Email invalide','Veuillez entrer une adresse email valide.'); return; }
+  closeModal('forgot');
+  showToast('📧','Email envoyé !','Vérifiez votre boîte mail pour réinitialiser votre mot de passe.');
+}
+function submitAlert(){
+  closeModal('alert');
+  openModal('signup');
+  showToast('🔔','Presque !','Créez un compte pour activer votre alerte.');
+}
+function submitPayment(plan,price){
+  closeAllModals();
+  showToast('🎉','Inscription '+plan+' !','Votre essai gratuit de 7 jours commence maintenant. Un email de confirmation vous a été envoyé.');
+}
+function submitContact(){
+  closeModal('contact');
+  showToast('💬','Message envoyé !','Nous vous répondrons sous 24h.');
+}
+function fakeOAuth(provider){
+  closeAllModals();
+  showToast('✅','Connexion '+provider+' !','Compte connecté avec succès. Bienvenue sur FlightAlert Pro !');
+}
+
+// ---- PRICING CARDS — click anywhere ----
+document.querySelectorAll('.plan').forEach(card=>{
+  card.addEventListener('mouseenter',()=>{ card.style.cursor='pointer'; });
+});
+</script>
+</body>
+</html>
